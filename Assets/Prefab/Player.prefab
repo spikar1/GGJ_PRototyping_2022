@@ -156,7 +156,7 @@ MonoBehaviour:
   AirAcceleration: 1500
   MaxSpeed: 10
   AirMinimumSpeed: 2.5
-  DecelerationForce: 40
+  DecelerationForce: 80
   AirDecelerationForce: 40
 --- !u!114 &6611354746011704075
 MonoBehaviour:
