@@ -17,7 +17,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
     [SerializeField]
     GameObject cheapQuad, expensiveSprite;
     [SerializeField]
-    Player player;
+    PlatformerPlayer player;
 
     private void Awake()
     {
@@ -28,7 +28,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             cheapQuad.SetActive(!cheapQuad.activeSelf);
             expensiveSprite.SetActive(!expensiveSprite.activeSelf);
