@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToTransform: {fileID: 1758854836}
+  useLocalAxis: 1
+  transformAxis: 0
 --- !u!4 &185593788
 Transform:
   m_ObjectHideFlags: 0
@@ -766,7 +768,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2119642783}
   cheapQuad: {fileID: 493381376}
   expensiveSprite: {fileID: 2119642779}
-  player: {fileID: 0}
   allowFreeToggle: 1
 --- !u!4 &1421278892
 Transform:
@@ -1256,6 +1257,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f2bc8090613eb349bd001ead4a3353a, type: 3}
+--- !u!1001 &4234796730931529531
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -241.25659
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -24.841461
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -131.55766
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1094667773137504248, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825393384077116830, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
+      propertyPath: m_Name
+      value: PlayModeManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: dafebc50433843549a0b08a2efe8e413, type: 3}
 --- !u!1001 &7575607198008911598
 PrefabInstance:
   m_ObjectHideFlags: 0

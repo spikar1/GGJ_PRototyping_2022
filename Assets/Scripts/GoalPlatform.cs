@@ -12,7 +12,7 @@ public class GoalPlatform : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlatformerPlayer>())
+        if (collision.gameObject.IsPlayer())
             StartCoroutine(LoadLevel(levelString));
     }
 

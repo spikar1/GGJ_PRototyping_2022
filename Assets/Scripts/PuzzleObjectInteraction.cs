@@ -7,32 +7,34 @@ public class PuzzleObjectInteraction : MonoBehaviour
 {
     public Transform objectToTransform;
 
-    PlatformerPlayer player;
+    public bool useLocalAxis = true;
 
-    private void Awake()
+    public enum Axis { X, Y, Z}
+    public Axis transformAxis = Axis.X;
+    Vector3 rotationAxis => transformAxis switch
     {
-        player = FindObjectOfType<PlatformerPlayer>();
-    }
+        Axis.X => Vector3.right,
+        Axis.Y => Vector3.up,
+        Axis.Z => Vector3.forward,
+        _ => throw new ArgumentOutOfRangeException(nameof(transformAxis), "Axis not defined ")
+    };
 
     private void Update()
     {
-        //Test
-        //todo: Change to timescale? 
-        if(player.frozen)
+        if(PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
             GlobalAxisKeybind();
-
     }
 
     private void GlobalAxisKeybind()
     {
-        objectToTransform.Rotate(Vector3.right, Input.GetAxis("Vertical"), Space.World);
-        transform.Rotate(Vector3.right, Input.GetAxis("Vertical"), Space.World);
+        objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
+        transform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
 
-        objectToTransform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
-        transform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
+        objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
+        transform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
 
-        objectToTransform.Rotate(Vector3.up, -Input.GetAxis("Z Axis"), Space.World);
-        transform.Rotate(Vector3.up, -Input.GetAxis("Z Axis"), Space.World);
+        objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
+        transform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
 
     }
 }

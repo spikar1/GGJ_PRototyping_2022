@@ -10,9 +10,10 @@ public class PlayModeSwitchTrigger : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<PlatformerPlayer>())
+        if (collision.gameObject.IsPlayer())
         {
-            FindObjectOfType<CreateSpriteFromCamera>().TogglePlayMode();
+            //TODO: Field should probably (maybe?) disappear after the player exits puzzle mode
+            PlayModeManager.Instance.CurrentMode = PlayModeManager.PlayMode.Puzzle;
             Destroy(gameObject);
         }
     }
