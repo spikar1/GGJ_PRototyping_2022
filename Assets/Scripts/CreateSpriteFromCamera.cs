@@ -22,8 +22,9 @@ public class CreateSpriteFromCamera : MonoBehaviour
     [SerializeField]
     bool allowFreeToggle;
 
-    private void Awake()
+    private void Start()
     {
+        player = FindObjectOfType<PlatformerPlayer>();
         player.Freeze();
         cam = GetComponent<Camera>();
     }

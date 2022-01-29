@@ -7,20 +7,7 @@ public class PuzzleObjectInteraction : MonoBehaviour
 {
     public Transform objectToTransform;
 
-    public bool useLocalAxis = true;
-
-    [SerializeField]
     PlatformerPlayer player;
-
-    public enum Axis { X, Y, Z}
-    public Axis transformAxis = Axis.X;
-    Vector3 rotationAxis => transformAxis switch
-    {
-        Axis.X => Vector3.right,
-        Axis.Y => Vector3.up,
-        Axis.Z => Vector3.forward,
-        _ => throw new ArgumentOutOfRangeException(nameof(transformAxis), "Axis not defined ")
-    };
 
     private void Awake()
     {
@@ -34,8 +21,6 @@ public class PuzzleObjectInteraction : MonoBehaviour
         if(player.frozen)
             GlobalAxisKeybind();
 
-        //objectToTransform.Rotate(rotationAxis, Input.GetAxis("Vertical"), useLocalAxis ? Space.Self : Space.World);
-        //transform.Rotate(rotationAxis, Input.GetAxis("Vertical"), Space.Self);
     }
 
     private void GlobalAxisKeybind()
