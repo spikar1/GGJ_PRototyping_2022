@@ -40,8 +40,8 @@ public class PuzzleObjectInteraction : MonoBehaviour
 
     private void GlobalAxisKeybind()
     {
-        objectToTransform.Rotate(Vector3.right, -Input.GetAxis("Vertical"), Space.World);
-        transform.Rotate(Vector3.right, -Input.GetAxis("Vertical"), Space.World);
+        objectToTransform.Rotate(Vector3.right, Input.GetAxis("Vertical"), Space.World);
+        transform.Rotate(Vector3.right, Input.GetAxis("Vertical"), Space.World);
 
         objectToTransform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
         transform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
