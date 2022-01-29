@@ -54,6 +54,8 @@ public class CreateSpriteFromCamera : MonoBehaviour
 
     private void UpdateCollider()
     {
+        //todo: Implement bloom to get better colliders at straight angles.
+
         if (pol)
             Destroy(pol);
         pol = spriteRenderer.gameObject.AddComponent<PolygonCollider2D>();
@@ -67,6 +69,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
     public Sprite CaptureScreen()
     {
         RenderTexture renderTexture = new RenderTexture(width, height, depth);
+        renderTexture.antiAliasing = 0;
         Rect rect = new Rect(0, 0, width, height);
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
 
