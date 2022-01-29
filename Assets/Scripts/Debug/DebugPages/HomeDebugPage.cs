@@ -21,6 +21,9 @@ public class HomeDebugPage : DebugPage
         if (Toggle("Disable ground check", disableGroundCheck))
             disableGroundCheck = !disableGroundCheck;
 
+        if (Toggle("Noclip", NoclipMotion.noclip))
+            NoclipMotion.noclip = !NoclipMotion.noclip;
+
         if (cameraInstance.Value)
         {
             if (Button("Swap Mode"))

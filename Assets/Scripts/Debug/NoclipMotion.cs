@@ -56,5 +56,14 @@ public class NoclipMotion : MonoBehaviour
 
             _lastKnownNoclipState = noclip;
         }
+
+        /*
+         * If noclip is enabled, allow motion
+         */
+        if (noclip)
+        {
+            Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * Time.deltaTime;
+            transform.Translate(inputVector * NoclipSpeed);
+        }
     }
 }
