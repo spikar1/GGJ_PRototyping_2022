@@ -22,6 +22,11 @@ public class PuzzleObjectInteraction : MonoBehaviour
         _ => throw new ArgumentOutOfRangeException(nameof(transformAxis), "Axis not defined ")
     };
 
+    private void Awake()
+    {
+        NudgeObjects();
+    }
+
     private void Update()
     {
         if(PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
@@ -34,13 +39,23 @@ public class PuzzleObjectInteraction : MonoBehaviour
         foreach (var objectToTransform in objectsToTransform)
         {
             objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
-            transform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
 
             objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
-            transform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
 
             objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
-            transform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
+        }
+
+    }
+    private void NudgeObjects()
+    {
+
+        foreach (var objectToTransform in objectsToTransform)
+        {
+            objectToTransform.Rotate(Vector3.right, 1, Space.World);
+
+            objectToTransform.Rotate(Vector3.forward, 1, Space.World);
+
+            objectToTransform.Rotate(Vector3.up, 1, Space.World);
         }
 
     }
