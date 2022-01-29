@@ -48,7 +48,7 @@ public class PuzzleObjectInteraction : MonoBehaviour
     }
     private void NudgeObjects()
     {
-
+        return;
         foreach (var objectToTransform in objectsToTransform)
         {
             objectToTransform.Rotate(Vector3.right, 1, Space.World);

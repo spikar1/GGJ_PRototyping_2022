@@ -31,6 +31,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
 
     private void Update()
     {
+
         if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return)))
         {
             if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle || allowFreeToggle)
@@ -63,7 +64,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
     private void UpdateCollider()
     {
         //todo: Implement bloom to get better colliders at straight angles.
-
+        return;
         if (pol)
             Destroy(pol);
 
