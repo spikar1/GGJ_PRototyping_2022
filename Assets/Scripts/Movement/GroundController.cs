@@ -103,10 +103,6 @@ public class GroundController : MonoBehaviour
          * Clamp speed
          */
 
-        RaycastHit2D ground = this.OnGround2D();
-        Debug.Log(ground.normal.ToString());
-
-
         _rigid.SetVelocityX(currentX => Mathf.Clamp(currentX, -MaxSpeed, MaxSpeed));
     }
 
