@@ -19,6 +19,9 @@ public class CreateSpriteFromCamera : MonoBehaviour
     [SerializeField]
     PlatformerPlayer player;
 
+    [SerializeField]
+    bool allowFreeToggle;
+
     private void Awake()
     {
         player.Freeze();
@@ -28,19 +31,24 @@ public class CreateSpriteFromCamera : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && (!expensiveSprite.activeSelf || allowFreeToggle))
         {
-            cheapQuad.SetActive(!cheapQuad.activeSelf);
-            expensiveSprite.SetActive(!expensiveSprite.activeSelf);
-            if (expensiveSprite.activeSelf)
-            {
-                UpdateSprite();
-                UpdateCollider();
-                player.UnFreeze();
-            }
-            else
-                player.Freeze();
+            TogglePlayMode();
         }
+    }
+
+    public void TogglePlayMode()
+    {
+        cheapQuad.SetActive(!cheapQuad.activeSelf);
+        expensiveSprite.SetActive(!expensiveSprite.activeSelf);
+        if (expensiveSprite.activeSelf)
+        {
+            UpdateSprite();
+            UpdateCollider();
+            player.UnFreeze();
+        }
+        else
+            player.Freeze();
     }
 
     private void UpdateCollider()
