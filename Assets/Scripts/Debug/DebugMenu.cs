@@ -19,6 +19,9 @@ public class DebugMenu : MonoBehaviour
     /// </summary>
     public Stack<DebugPage> NavigationStack { get; } = new Stack<DebugPage>();
 
+
+    public GameObject BallPrefab;
+
     //The current run output
     private List<string> _currentRun = new List<string>();
 
