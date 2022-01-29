@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Steffen_Surface
+  m_Name: Steffen_Surface 1
   m_Shader: {fileID: 4800000, guid: 5ebb3694f4f027f4bbcd6ee863c39e6d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ToonRamp:
-        m_Texture: {fileID: 2800000, guid: 191f2888a863578478b9e0144de63728, type: 3}
+        m_Texture: {fileID: 2800000, guid: fa3535354fff29c4da7257e40ec98af0, type: 3}
         m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
