@@ -9,8 +9,9 @@ public class PlatformerPlayer : MonoBehaviour
 
     [SerializeField]
     float walkSpeed = 7, jumpStrength = 4;
+    public  bool frozen;
 
-        private void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
@@ -33,11 +34,13 @@ public class PlatformerPlayer : MonoBehaviour
 
     public void Freeze()
     {
+        frozen = true;
         rb.bodyType = RigidbodyType2D.Static;
         rb.velocity = Vector2.zero;
     }
     public void UnFreeze()
     {
+        frozen = false;
         rb.bodyType = RigidbodyType2D.Dynamic;
     }
 }

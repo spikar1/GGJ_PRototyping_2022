@@ -9,6 +9,9 @@ public class PuzzleObjectInteraction : MonoBehaviour
 
     public bool useLocalAxis = true;
 
+    [SerializeField]
+    PlatformerPlayer player;
+
     public enum Axis { X, Y, Z}
     public Axis transformAxis = Axis.X;
     Vector3 rotationAxis => transformAxis switch
@@ -19,10 +22,17 @@ public class PuzzleObjectInteraction : MonoBehaviour
         _ => throw new ArgumentOutOfRangeException(nameof(transformAxis), "Axis not defined ")
     };
 
+    private void Awake()
+    {
+        player = FindObjectOfType<PlatformerPlayer>();
+    }
+
     private void Update()
     {
         //Test
-        GlobalAxisKeybind();
+        //todo: Change to timescale? 
+        if(player.frozen)
+            GlobalAxisKeybind();
 
         //objectToTransform.Rotate(rotationAxis, Input.GetAxis("Vertical"), useLocalAxis ? Space.Self : Space.World);
         //transform.Rotate(rotationAxis, Input.GetAxis("Vertical"), Space.Self);
@@ -33,11 +43,11 @@ public class PuzzleObjectInteraction : MonoBehaviour
         objectToTransform.Rotate(Vector3.right, -Input.GetAxis("Vertical"), Space.World);
         transform.Rotate(Vector3.right, -Input.GetAxis("Vertical"), Space.World);
 
-        objectToTransform.Rotate(Vector3.forward, Input.GetAxis("Horizontal"), Space.World);
-        transform.Rotate(Vector3.forward, Input.GetAxis("Horizontal"), Space.World);
+        objectToTransform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
+        transform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal"), Space.World);
 
-        objectToTransform.Rotate(Vector3.up, Input.GetAxis("Z Axis"), Space.World);
-        transform.Rotate(Vector3.up, Input.GetAxis("Z Axis"), Space.World);
+        objectToTransform.Rotate(Vector3.up, -Input.GetAxis("Z Axis"), Space.World);
+        transform.Rotate(Vector3.up, -Input.GetAxis("Z Axis"), Space.World);
 
     }
 }
