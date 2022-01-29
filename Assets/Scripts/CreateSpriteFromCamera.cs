@@ -78,7 +78,8 @@ public class CreateSpriteFromCamera : MonoBehaviour
     public Sprite CaptureScreen()
     {
         RenderTexture renderTexture = new RenderTexture(width, height, depth);
-        renderTexture.antiAliasing = 0;
+        renderTexture.antiAliasing = 1;
+        renderTexture.filterMode = FilterMode.Point;
         Rect rect = new Rect(0, 0, width, height);
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
 
@@ -95,6 +96,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
         Destroy(renderTexture);
 
         Sprite sprite = Sprite.Create(texture, rect, Vector2.zero);
+        
 
         return sprite;
     }

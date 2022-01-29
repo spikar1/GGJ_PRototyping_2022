@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class PuzzleObjectInteraction : MonoBehaviour
 {
-    public Transform objectToTransform;
+    public Transform[] objectsToTransform;
+
+    [SerializeField]
+    float rotationSpeed = 180;
 
     public bool useLocalAxis = true;
 
@@ -27,14 +30,18 @@ public class PuzzleObjectInteraction : MonoBehaviour
 
     private void GlobalAxisKeybind()
     {
-        objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
-        transform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
 
-        objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
-        transform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
+        foreach (var objectToTransform in objectsToTransform)
+        {
+            objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            transform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical"), Space.World);
 
-        objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
-        transform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
+            objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            transform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal"), Space.World);
+
+            objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            transform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis"), Space.World);
+        }
 
     }
 }
