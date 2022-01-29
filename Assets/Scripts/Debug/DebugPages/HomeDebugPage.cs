@@ -41,6 +41,6 @@ public class HomeDebugPage : DebugPage
         Separator();
 
         if (Button("Reset"))
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
