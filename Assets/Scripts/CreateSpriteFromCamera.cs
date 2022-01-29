@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SteffenTestScript : MonoBehaviour
+public class CreateSpriteFromCamera : MonoBehaviour
 {
-    public Camera camera;
     int height = 1024*4;
     int width = 1024*4;
     int depth = 1;
+
+    Camera cam;
 
     public SpriteRenderer spriteRenderer;
     PolygonCollider2D pol;
@@ -21,6 +22,7 @@ public class SteffenTestScript : MonoBehaviour
     private void Awake()
     {
         player.Freeze();
+        cam = GetComponent<Camera>();
     }
 
     private void Update()
@@ -59,15 +61,15 @@ public class SteffenTestScript : MonoBehaviour
         Rect rect = new Rect(0, 0, width, height);
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
 
-        GetComponent<Camera>().targetTexture = renderTexture;
-        GetComponent<Camera>().Render();
+        cam.targetTexture = renderTexture;
+        cam.Render();
 
         RenderTexture currentRenderTexture = RenderTexture.active;
         RenderTexture.active = renderTexture;
         texture.ReadPixels(rect, 0, 0);
         texture.Apply();
 
-        GetComponent<Camera>().targetTexture = null;
+        cam.targetTexture = null;
         RenderTexture.active = currentRenderTexture;
         Destroy(renderTexture);
 
