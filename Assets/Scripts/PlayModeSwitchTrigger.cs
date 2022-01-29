@@ -11,7 +11,8 @@ public class PlayModeSwitchTrigger : MonoBehaviour
 {
     private bool _hasBeenTriggered;
 
-    private const float ENTER_DELAY_TIME = 0.5f;
+    private const float CENTERING_TIME_INITIAL_DELAY = 0.25f;
+    private const float CENTERING_TIME = 0.25f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,17 +22,29 @@ public class PlayModeSwitchTrigger : MonoBehaviour
         if (collision.gameObject.IsPlayer())
         {
             _hasBeenTriggered = true;
-            StartCoroutine(nameof(CoEnterSwitch));
+            StartCoroutine(CoEnterSwitch(this.GetPlayer().transform));
         }
     }
 
-    IEnumerator CoEnterSwitch()
+    IEnumerator CoEnterSwitch(Transform player)
     {
         //Sorry...
         Time.timeScale = 0f;
         //End sorry
 
-        yield return new WaitForSecondsRealtime(ENTER_DELAY_TIME);
+        yield return new WaitForSecondsRealtime(CENTERING_TIME_INITIAL_DELAY);
+
+        Vector2 startPos = player.transform.position;
+        Vector2 endPos = transform.position;
+
+        for (float i = 0; i < CENTERING_TIME; i += Time.unscaledDeltaTime)
+        {
+            player.transform.position = Vector3.Lerp(startPos, endPos, i / CENTERING_TIME);
+            yield return new WaitForEndOfFrame();
+        }
+
+        player.transform.position = endPos;
+
         PlayModeManager.Instance.CurrentMode = PlayModeManager.PlayMode.Puzzle;
 
         yield return new WaitUntil(() => PlayModeManager.Instance.CurrentMode != PlayModeManager.PlayMode.Puzzle);
