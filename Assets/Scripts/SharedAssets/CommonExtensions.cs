@@ -11,7 +11,7 @@ public static class CommonExtensions
     /// <summary>
     /// The default mask the OnGround checks will use if nothing else is specified
     /// </summary>
-    public static LayerMask DefaultGroundMask = ~0;
+    public static LayerMask DefaultGroundMask = ~LayerMask.GetMask("NoGround");
 
     /// <summary>
     /// Checks if the 2D game object of this monobehaviour is grounded
@@ -50,7 +50,7 @@ public static class CommonExtensions
     /// <returns></returns>
     public static RaycastHit2D OnGround2D(this GameObject obj, params string[] layers)
     {
-        const float RAY_DISTANCE = 0.03f;
+        const float RAY_DISTANCE = 0.01f;
 
         Collider2D collider = obj.GetComponent<Collider2D>();
 
@@ -68,22 +68,27 @@ public static class CommonExtensions
         }
 
         //Create bounds object based on collider.bounds, but add the edgeradius
-        Bounds colliderBounds = new Bounds(collider.bounds.center,
-            new Vector3(collider.bounds.size.x + (edgeRadius * 2), collider.bounds.size.y + (edgeRadius * 2),
-                collider.bounds.size.z));
+        Bounds colliderBounds = new Bounds(
+            collider.bounds.center,
+            new Vector3(
+                collider.bounds.size.x + (edgeRadius * 2), 
+                collider.bounds.size.y + (edgeRadius * 2),
+                collider.bounds.size.z
+            )
+        );
         
             
         //Does a horizontal raycasting under the object's collider to check if it collides with another collider
         if (layers.Any())
         {
-            return Physics2D.Raycast(new Vector2(colliderBounds.min.x, colliderBounds.min.y), Vector2.down, RAY_DISTANCE, LayerMask.GetMask(layers));
+            return Physics2D.Raycast(colliderBounds.center, Vector2.down, colliderBounds.extents.magnitude + RAY_DISTANCE, LayerMask.GetMask(layers));
         }
 
         RaycastHit2D hit;
-        if (hit = Physics2D.Raycast(new Vector2(colliderBounds.min.x, colliderBounds.min.y), Vector2.down, RAY_DISTANCE, DefaultGroundMask))
+        if (hit = Physics2D.Raycast(colliderBounds.center, Vector2.down, colliderBounds.extents.magnitude + RAY_DISTANCE, DefaultGroundMask))
             return hit;
 
-        if (hit = Physics2D.Raycast(new Vector2(colliderBounds.max.x, colliderBounds.min.y), Vector2.down, RAY_DISTANCE, DefaultGroundMask))
+        if (hit = Physics2D.Raycast(colliderBounds.center, Vector2.down, colliderBounds.extents.magnitude + RAY_DISTANCE, DefaultGroundMask))
             return hit;
 
         return default;
