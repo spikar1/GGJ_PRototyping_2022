@@ -24,7 +24,8 @@ public class PlatformerPlayer : MonoBehaviour
 
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+        if (this.OnGround2D() || HomeDebugPage.disableGroundCheck)
+            rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
     }
 
     private void FixedUpdate()
