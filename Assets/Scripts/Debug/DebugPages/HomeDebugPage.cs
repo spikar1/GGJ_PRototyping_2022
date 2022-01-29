@@ -16,10 +16,6 @@ public class HomeDebugPage : DebugPage
 
     public static bool disableGroundCheck;
 
-    RenewableLazy<CreateSpriteFromCamera> cameraInstance = new RenewableLazy<CreateSpriteFromCamera>(
-        () => UnityEngine.Object.FindObjectOfType<CreateSpriteFromCamera>()
-    );
-
     protected override void RunItems(DebugMenu caller)
     {
         if (Toggle("Disable ground check", disableGroundCheck))
@@ -28,11 +24,8 @@ public class HomeDebugPage : DebugPage
         if (Toggle("Noclip", NoclipMotion.noclip))
             NoclipMotion.noclip = !NoclipMotion.noclip;
 
-        if (cameraInstance.Value)
-        {
-            if (Button("Swap Mode"))
-                cameraInstance.Value.TogglePlayMode();
-        }
+        if (Button("Play Mode [" + PlayModeManager.Instance.CurrentMode + "]"))
+            PlayModeManager.Instance.SwitchModes();
 
         Separator();
 

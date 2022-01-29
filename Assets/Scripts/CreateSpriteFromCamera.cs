@@ -1,3 +1,5 @@
+#pragma warning disable CS0649
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,46 +18,53 @@ public class CreateSpriteFromCamera : MonoBehaviour
 
     [SerializeField]
     GameObject cheapQuad, expensiveSprite;
-    [SerializeField]
-    PlatformerPlayer player;
 
     [SerializeField]
     bool allowFreeToggle;
 
-    private void Start()
+    PlayModeManager.PlayMode? lastKnownMode = null;
+
+    private void Awake()
     {
-        player = FindObjectOfType<PlatformerPlayer>();
-        player.Freeze();
         cam = GetComponent<Camera>();
     }
 
     private void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && (!expensiveSprite.activeSelf || allowFreeToggle))
+        if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return)))
         {
-            TogglePlayMode();
+            if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle || allowFreeToggle)
+                PlayModeManager.Instance.SwitchModes();
         }
+
+        if (PlayModeManager.Instance.CurrentMode != lastKnownMode)
+            OnTogglePlayMode();
     }
 
-    public void TogglePlayMode()
+    public void OnTogglePlayMode()
     {
-        cheapQuad.SetActive(!cheapQuad.activeSelf);
-        expensiveSprite.SetActive(!expensiveSprite.activeSelf);
-        if (expensiveSprite.activeSelf)
+        if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Platform)
         {
+            cheapQuad.SetActive(false);
+            expensiveSprite.SetActive(true);
+
             UpdateSprite();
             UpdateCollider();
-            player.UnFreeze();
         }
-        else
-            player.Freeze();
+        else if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
+        {
+            cheapQuad.SetActive(true);
+            expensiveSprite.SetActive(false);
+        }
+
+        lastKnownMode = PlayModeManager.Instance.CurrentMode;
     }
 
     private void UpdateCollider()
     {
         if (pol)
             Destroy(pol);
+
         pol = spriteRenderer.gameObject.AddComponent<PolygonCollider2D>();
     }
 

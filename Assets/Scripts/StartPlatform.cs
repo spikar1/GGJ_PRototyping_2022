@@ -7,17 +7,17 @@ public class StartPlatform : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
 
-    PlatformerPlayer player;
-
     Vector3 playerStartPosition = Vector3.up * 1.5f;
 
     private void Awake()
     {
         //todo: OnScene loaded effect
 
-        player = GetComponent<PlatformerPlayer>();
+        GameObject player = this.GetPlayer();
+
         if (!player)
-            player = Instantiate(playerPrefab).AddComponent<PlatformerPlayer>();
+            player = Instantiate(playerPrefab);
+
         player.transform.position = transform.position + playerStartPosition;
     }
 
