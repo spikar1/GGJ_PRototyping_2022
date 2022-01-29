@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class CreateSpriteFromCamera : MonoBehaviour
 {
-    int height = 1024*2;
-    int width = 1024*2;
+    int height = 1024;
+    int width = 1024;
     int depth = 1;
 
     Camera cam;
