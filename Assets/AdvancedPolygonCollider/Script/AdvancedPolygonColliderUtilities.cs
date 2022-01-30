@@ -101,7 +101,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
                 }
             }
 
-            UnityEngine.Debug.Log($"{floatolors } island(s) found");
+            UnityEngine.Debug.Log($"{floatolors} island(s) found");
 
             solidsLength = colors.Length;
 
@@ -183,6 +183,15 @@ namespace DigitalRuby.AdvancedPolygonCollider
                     }
                     while (true);
 
+                    var sets = new HashSet<Vector2>();
+                    var offset = 0;
+                    for(var i = 0; i<polygon.Count; i++)
+                    {
+                        var p = polygon[i];
+                        if (sets.Add(p)) continue;
+                        offset++;
+                        polygon[i] += new Vector2(0, offset / 500f);
+                    }
                     detectedPolygons.Add(polygon);
                 }
 
