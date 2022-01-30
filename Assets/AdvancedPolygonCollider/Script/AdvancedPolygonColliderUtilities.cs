@@ -168,7 +168,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
                                     {
                                         polygon.InsertRange(vertex2Index, holePolygon);
                                     }
-                                    break;
                                 }
                             }
                             else
