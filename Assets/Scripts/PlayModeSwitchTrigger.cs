@@ -11,6 +11,8 @@ public class PlayModeSwitchTrigger : MonoBehaviour
 {
     private bool _hasBeenTriggered;
 
+    private static PlayModeSwitchTrigger _lastCheckpoint;
+
     private const float CENTERING_TIME_INITIAL_DELAY = 0.25f;
     private const float CENTERING_TIME = 0.25f;
 
@@ -48,6 +50,25 @@ public class PlayModeSwitchTrigger : MonoBehaviour
         PlayModeManager.Instance.CurrentMode = PlayModeManager.PlayMode.Puzzle;
 
         yield return new WaitUntil(() => PlayModeManager.Instance.CurrentMode != PlayModeManager.PlayMode.Puzzle);
-        Destroy(gameObject);
+
+
+        FindObjectOfType<PuzzleObjectInteraction>().SaveRotationsAtCheckpoint();
+        _lastCheckpoint = this;
+        gameObject.SetActive(false);
+    }
+
+    public static bool HasCheckpoint()
+    {
+        return _lastCheckpoint;
+    }
+
+    public static void ReloadLastCheckpoint()
+    {
+        if (_lastCheckpoint == null)
+            return;
+
+        _lastCheckpoint.gameObject.SetActive(true);
+        _lastCheckpoint._hasBeenTriggered = false;
+        CommonExtensions.GetPlayer().transform.position = _lastCheckpoint.transform.position;
     }
 }
