@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelNameText : MonoBehaviour
 {
-    float waitTime = 1;
+    float waitTime = 2;
     float animationLength = 1;
 
     Vector3 offset => Vector2.up * 2;

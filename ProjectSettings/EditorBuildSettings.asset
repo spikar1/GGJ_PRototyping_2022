@@ -42,7 +42,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels for build/Three normal platforms.unity
     guid: 874bd413462c6d446a1367ebcf098d1f
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Seesaw 1.unity
+    path: Assets/Scenes/Levels for build/In the cage.unity
     guid: 22af5f96656b78c4c9b1e294f17e2b4d
   - enabled: 1
     path: Assets/Scenes/Levels for build/Spatial Recognition.unity
