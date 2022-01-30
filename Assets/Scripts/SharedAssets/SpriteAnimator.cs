@@ -94,7 +94,7 @@ public class SpriteAnimator : MonoBehaviour
             CurrentFrame = (CurrentFrame + 1) % _animation.FrameCount;
             _spriteRenderer.sprite = _animation.Frames[CurrentFrame].Sprite;
 
-            yield return new WaitForSeconds(_animation.FrameTime / _animation.FrameTimeDivider * _animation.Frames[CurrentFrame].FrameTimeMultiplier / PlaybackSpeed);
+            yield return new WaitForSecondsRealtime(_animation.FrameTime / _animation.FrameTimeDivider * _animation.Frames[CurrentFrame].FrameTimeMultiplier / PlaybackSpeed);
         }
     }
 

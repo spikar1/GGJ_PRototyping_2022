@@ -221,6 +221,7 @@ MonoBehaviour:
   Idle: {fileID: 11400000, guid: 23d7cde8a58d59644ba8a89c6d55a228, type: 2}
   Walk: {fileID: 11400000, guid: e53d17501f22be045890df4fba26cdd7, type: 2}
   Jump: {fileID: 11400000, guid: 5369aea53257fbc4cacedf60cf0942f7, type: 2}
+  InPuzzle: {fileID: 11400000, guid: f654623e6a0c77c47b7d0881cddaecea, type: 2}
 --- !u!114 &2488028414820896060
 MonoBehaviour:
   m_ObjectHideFlags: 0
