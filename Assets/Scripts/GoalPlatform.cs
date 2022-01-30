@@ -5,18 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GoalPlatform : MonoBehaviour
 {
-    [SerializeField]
-    string levelString = "INSERT LEVEL NAME";
-
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.IsPlayer())
-            StartCoroutine(LoadLevel(levelString));
+            StartCoroutine(LoadNextLevel());
     }
 
-    IEnumerator LoadLevel(string levelName)
+    IEnumerator LoadNextLevel()
     {
         yield return null; //todo: Insert fancy effect!
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
