@@ -12,6 +12,11 @@ public class PlayModeManager : MonoBehaviour
     private PlayMode _lastKnownMode;
     public PlayMode CurrentMode;
 
+    private void Start()
+    {
+        Time.timeScale = 1f;
+    }
+
     private void Update()
     {
         if (_lastKnownMode != CurrentMode)
