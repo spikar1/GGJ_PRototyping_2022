@@ -29,6 +29,9 @@ public class PlayModeManager : MonoBehaviour
             {
                 Time.timeScale = 1f;
                 this.GetPlayer().GetComponent<Rigidbody2D>().velocity = default;
+                SoundManager.Instance.StopSound(SoundManager.Sound.MoveX);
+                SoundManager.Instance.StopSound(SoundManager.Sound.MoveY);
+                SoundManager.Instance.StopSound(SoundManager.Sound.MoveZ);
             }
                 
 
