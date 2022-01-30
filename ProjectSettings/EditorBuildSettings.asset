@@ -51,8 +51,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels for build/Spatial Recognition.unity
     guid: 12e306de767fd4240ac89efe5a8539c6
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Ah, back to basics.unity
+    path: Assets/Scenes/Levels for build/Rings of Dread.unity
     guid: b193101ddccb86445ab549b46e364887
+  - enabled: 1
+    path: Assets/Scenes/Levels for build/Hello!.unity
+    guid: b52c2dd51ffcf9544b27b70f77c08f3b
   - enabled: 1
     path: Assets/Scenes/Levels for build/Game End.unity
     guid: 9786348e21104bc49b2611d48e64f21b
