@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using UnityEditor;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayModeManager : MonoBehaviour
 {
@@ -25,10 +17,15 @@ public class PlayModeManager : MonoBehaviour
         if (_lastKnownMode != CurrentMode)
         {
             if (CurrentMode == PlayMode.Puzzle)
+            {
                 Time.timeScale = 0f;
-
+            }
             else
+            {
                 Time.timeScale = 1f;
+                this.GetPlayer().GetComponent<Rigidbody2D>().velocity = default;
+            }
+                
 
             _lastKnownMode = CurrentMode;
         }
