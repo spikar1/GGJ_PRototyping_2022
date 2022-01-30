@@ -46,7 +46,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
         private const float hullTolerance = 0.9f;
 
         private byte[] solids;
-        private int[] coloredSolids;
         private int solidsLength;
         private int width;
         private int height;
@@ -58,7 +57,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
             int n, s;
 
             solids = new byte[colors.Length];
-            coloredSolids = new int[colors.Length];
 
             // calculate solids once, this makes tolerance lookups much faster
             for (int i = 0; i < solids.Length; i++)
@@ -70,37 +68,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
                 n = n * s * s; // multiply n by sign squared to get 0 for negative numbers (solid) and > zero for positive numbers (pass through)
                 solids[i] = (byte)n; // assign value back
             }
-
-
-            var neighbors = new int[]{-1, 1, width, -width};
-            var floatolors = 0;
-            for (int i = 0; i< solids.Length; i++)
-            {
-                if(coloredSolids[0] != 0) continue;
-                if(solids[i] != 0) continue;
-                floatolors++;
-                
-
-                // Flood fill the area with the color
-                var stack = new Stack<int>();
-                stack.Push(i);
-                while (stack.Count > 0)
-                {
-                    var index = stack.Pop();
-                    coloredSolids[index] = floatolors;
-                    for (int j = 0; j < neighbors.Length; j++)
-                    {
-                        var neighbor = index + neighbors[j];
-                        if (neighbor < 0 || neighbor >= solids.Length) continue;
-                        if (coloredSolids[neighbor] != 0) continue;
-                        if (solids[neighbor] != 0) continue;
-                        stack.Push(neighbor);
-                    }
-
-                }
-            }
-
-            UnityEngine.Debug.Log($"{floatolors } island(s) found");
 
             solidsLength = colors.Length;
 
@@ -118,6 +85,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
         public List<Vertices> DetectVertices()
         {
             List<Vertices> detectedPolygons = new List<Vertices>();
+            UnityEngine.Debug.Log("---");
             Vector2? holeEntrance = null;
             Vector2? polygonEntrance = null;
             List<Vector2> blackList = new List<Vector2>();
@@ -129,6 +97,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
                 if (detectedPolygons.Count == 0)
                 {
                     // First pass / single polygon
+                    UnityEngine.Debug.Log("First Pass");
                     polygon = new Vertices(CreateSimplePolygon(Vector2.zero, Vector2.zero));
                     if (polygon.Count > 2)
                     {
@@ -137,6 +106,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
                 }
                 else if (polygonEntrance.HasValue)
                 {
+                    UnityEngine.Debug.Log("Multi Pass");
                     // Multi pass / multiple polygons
                     polygon = new Vertices(CreateSimplePolygon(polygonEntrance.Value, new Vector2(polygonEntrance.Value.x - 1f, polygonEntrance.Value.y)));
                 }
@@ -160,6 +130,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
                                 Vertices holePolygon = CreateSimplePolygon(holeEntrance.Value, new Vector2(holeEntrance.Value.x + 1, holeEntrance.Value.y));
                                 if (holePolygon != null && holePolygon.Count > 2)
                                 {
+                                    UnityEngine.Debug.Log("Hole Entrance");
                                     // Add first hole polygon vertex to close the hole polygon.
                                     holePolygon.Add(holePolygon[0]);
                                     int vertex1Index, vertex2Index;
@@ -408,12 +379,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
 
         private bool InPolygon(Vertices polygon, Vector2 point)
         {
-            if(polygon.Count <= 0) return false;
-            var polygonColor = coloredSolids[(int)polygon[0].x + (int)polygon[0].y * width];
-            var pointColor = coloredSolids[(int)point.x + (int)point.y * width];
-            return polygonColor == pointColor;
-
-            /*
             bool inPolygon = !DistanceToHullAcceptableHoles(polygon, point, true);
 
             if (!inPolygon)
@@ -433,7 +398,6 @@ namespace DigitalRuby.AdvancedPolygonCollider
             }
 
             return true;
-            */
         }
 
         private Vector2? GetTopMostVertex(Vertices vertices)

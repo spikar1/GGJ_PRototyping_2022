@@ -50,7 +50,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
             expensiveSprite.SetActive(true);
 
             UpdateSprite();
-            UpdateCollider();
+            //UpdateCollider();
         }
         else if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
         {
