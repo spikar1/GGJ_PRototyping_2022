@@ -79,7 +79,9 @@ public class CreateSpriteFromCamera : MonoBehaviour
     public Sprite CaptureScreen()
     {
         RenderTexture renderTexture = new RenderTexture(width, height, depth);
-        renderTexture.antiAliasing = 1;
+        renderTexture.antiAliasing = 0;
+        renderTexture.useMipMap = false;
+        //renderTexture.
         renderTexture.filterMode = FilterMode.Point;
         Rect rect = new Rect(0, 0, width, height);
         Texture2D texture = new Texture2D(width, height, TextureFormat.RGBA32, false);
