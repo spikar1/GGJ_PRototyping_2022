@@ -40,6 +40,9 @@ public class HomeDebugPage : DebugPage
 
         Separator();
 
+        if (Button("Load level..."))
+            caller.NavigationStack.Push(new LoadLevelDebugPage());
+
         if (Button("Reset"))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
