@@ -36,6 +36,8 @@ public class PlayModeSwitchTrigger : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(CENTERING_TIME_INITIAL_DELAY);
 
+        SoundManager.Instance.PlaySound(SoundManager.Sound.EnterZone);
+
         Vector2 startPos = player.transform.position;
         Vector2 endPos = transform.position;
 

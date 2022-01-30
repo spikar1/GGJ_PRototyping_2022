@@ -14,6 +14,7 @@ public class GoalPlatform : MonoBehaviour
     IEnumerator LoadNextLevel()
     {
         yield return null; //todo: Insert fancy effect!
+        ResetButton.LastLevelLoadReason = ResetButton.LastLevelLoadReason = ResetButton.LevelLoadReason.Finish;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

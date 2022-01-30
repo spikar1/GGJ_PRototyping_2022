@@ -33,13 +33,50 @@ public class PuzzleObjectInteraction : MonoBehaviour
         foreach (var objectToTransform in objectsToTransform)
         {
             if (availableAxes.HasFlag(Axis.Y))
-                objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            {
+                if (Mathf.Abs(Input.GetAxisRaw("Vertical")) > 0.05f)
+                {
+                    SoundManager.Instance.PlaySound(SoundManager.Sound.MoveY, false);
+                    objectToTransform.Rotate(Vector3.right, Input.GetAxisRaw("Vertical") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+                }
+                else
+                {
+                    SoundManager.Instance.StopSound(SoundManager.Sound.MoveY);
+                }   
+            }
+                
 
             if (availableAxes.HasFlag(Axis.X))
-                objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            {
+                if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.05f)
+                {
+                    SoundManager.Instance.PlaySound(SoundManager.Sound.MoveX, false);
+                    objectToTransform.Rotate(Vector3.forward, -Input.GetAxisRaw("Horizontal") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+                }
+                else
+                {
+                    SoundManager.Instance.StopSound(SoundManager.Sound.MoveX);
+                }
+                
+            }   
 
             if (availableAxes.HasFlag(Axis.Z))
-                objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+            {
+                if (Mathf.Abs(Input.GetAxisRaw("Z Axis")) > 0.05f)
+                {
+                    SoundManager.Instance.PlaySound(SoundManager.Sound.MoveZ, false);
+                    objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
+                }
+                else
+                {
+                    SoundManager.Instance.StopSound(SoundManager.Sound.MoveZ);
+                }
+            }
+            else
+            {
+                SoundManager.Instance.StopSound(SoundManager.Sound.MoveZ);
+            }
+                
         }
     }
 
