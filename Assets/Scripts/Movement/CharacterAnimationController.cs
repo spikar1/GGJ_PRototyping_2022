@@ -8,6 +8,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteAnimator))]
+[RequireComponent(typeof(Flippable))]
 public class CharacterAnimationController : MonoBehaviour
 {
     public SpriteAnimation Idle;
@@ -16,6 +17,7 @@ public class CharacterAnimationController : MonoBehaviour
 
     private Rigidbody2D _rigid;
     private SpriteAnimator _animator;
+    private Flippable _flippable;
 
     private float _lastTimeOnGround;
 
@@ -23,6 +25,7 @@ public class CharacterAnimationController : MonoBehaviour
     {
         _rigid = GetComponent<Rigidbody2D>();
         _animator = GetComponent<SpriteAnimator>();
+        _flippable = GetComponent<Flippable>();
     }
 
     private void Update()
@@ -30,6 +33,12 @@ public class CharacterAnimationController : MonoBehaviour
         const float WALK_ANIMATION_SPEED_THRESHOLD = 1f;
         const float WALK_TO_FALL_ANIMATION_TIME = 0.25f;
         const float JUMP_FORCE = 10f;
+
+        if (_rigid.velocity.x > 0)
+            _flippable.Direction = Direction1D.Right;
+
+        else if (_rigid.velocity.x < 0)
+            _flippable.Direction = Direction1D.Left;
 
         if (!this.OnGround2D())
         {
