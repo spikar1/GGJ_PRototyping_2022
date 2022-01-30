@@ -14,10 +14,18 @@ public class PuzzleObjectInteraction : MonoBehaviour
 
     public Axis availableAxes = Axis.Everything;
 
+    Quaternion[] rotationsAtLastCheckpoint;
+    Quaternion[] rotationsAtStart;
+
     private void Update()
     {
         if(PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
             GlobalAxisKeybind();
+    }
+
+    private void Start()
+    {
+        SaveRotationsAtStart();
     }
 
     private void GlobalAxisKeybind()
@@ -34,7 +42,45 @@ public class PuzzleObjectInteraction : MonoBehaviour
             if (availableAxes.HasFlag(Axis.Z))
                 objectToTransform.Rotate(Vector3.up, -Input.GetAxisRaw("Z Axis") * Time.unscaledDeltaTime * rotationSpeed, Space.World);
         }
+    }
 
+    [ContextMenu("Save from start")]
+    public void SaveRotationsAtStart()
+    {
+        rotationsAtStart = new Quaternion[objectsToTransform.Length];
+        for (int i = 0; i < rotationsAtStart.Length; i++)
+        {
+            rotationsAtStart[i] = objectsToTransform[i].rotation;
+        }
+    }
+
+    [ContextMenu("Load from start")]
+    public void LoadRotationsFromStart()
+    {
+        for (int i = 0; i < rotationsAtStart.Length; i++)
+        {
+            var rot = rotationsAtStart[i];
+            objectsToTransform[i].rotation = rot;
+        }
+    }
+    [ContextMenu("Save")]
+    public void SaveRotationsAtCheckpoint()
+    {
+        rotationsAtLastCheckpoint = new Quaternion[objectsToTransform.Length];
+        for (int i = 0; i < rotationsAtLastCheckpoint.Length; i++)
+        {
+            rotationsAtLastCheckpoint[i] = objectsToTransform[i].rotation;
+        }
+    }
+
+    [ContextMenu("Load")]
+    public void LoadRotationsFromCheckpoint()
+    {
+        for (int i = 0; i < rotationsAtLastCheckpoint.Length; i++)
+        {
+            var rot = rotationsAtLastCheckpoint[i];
+            objectsToTransform[i].rotation = rot;
+        }
     }
 
     [Flags]
