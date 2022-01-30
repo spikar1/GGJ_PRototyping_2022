@@ -66,6 +66,10 @@ public class JumpController : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -12)
+            ResetButton.ResetToLastCheckpoint();
+
+
         bool mayJump = MayJump();
         RaycastHit2D rawGround = this.OnGround2D();
         bool onGround = rawGround | HomeDebugPage.disableGroundCheck;

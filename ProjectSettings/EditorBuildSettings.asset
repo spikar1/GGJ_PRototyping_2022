@@ -42,6 +42,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels for build/Three normal platforms.unity
     guid: 874bd413462c6d446a1367ebcf098d1f
   - enabled: 1
+    path: Assets/Scenes/Levels for build/Seesaw 1.unity
+    guid: 22af5f96656b78c4c9b1e294f17e2b4d
+  - enabled: 1
     path: Assets/Scenes/Levels for build/Spatial Recognition.unity
     guid: 12e306de767fd4240ac89efe5a8539c6
+  - enabled: 1
+    path: Assets/Scenes/Levels for build/Game End.unity
+    guid: 2b605c5fff9b36942a79f1517b51a726
   m_configObjects: {}

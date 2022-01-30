@@ -5,13 +5,14 @@ using UnityEngine;
 public class StartPlatform : MonoBehaviour
 {
     [SerializeField]
-    GameObject playerPrefab;
+    GameObject playerPrefab, textDisplayPrefab;
 
     Vector3 playerStartPosition => Vector3.up;
 
     private void Awake()
     {
         //todo: OnScene loaded effect
+        Instantiate(textDisplayPrefab);
 
         GameObject player = this.GetPlayer();
 
