@@ -854,7 +854,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
             bool foundTransparent = false;
             bool inPolygon = false;
 
-            for (int i = (int)start.x + (int)start.y * width; i <= solidsLength; i++)
+            for (int i = 0/*(int)start.x + (int)start.y * width*/; i <= solidsLength; i++)
             {
                 if (IsSolid(i))
                 {

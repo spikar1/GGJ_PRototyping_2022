@@ -7,7 +7,7 @@ public class StartPlatform : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
 
-    Vector3 playerStartPosition => Vector3.up * 2;
+    Vector3 playerStartPosition => Vector3.up;
 
     private void Awake()
     {
