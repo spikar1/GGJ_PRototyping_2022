@@ -7,8 +7,7 @@ public class PuzzleObjectInteraction : MonoBehaviour
 {
     public Transform[] objectsToTransform;
 
-    [SerializeField]
-    float rotationSpeed = 180;
+    float rotationSpeed = 90;
 
     public bool useLocalAxis = true;
 

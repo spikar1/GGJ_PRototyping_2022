@@ -13,6 +13,10 @@ public class MenuController : MonoBehaviour
     {
         SceneManager.LoadScene(levelName);
     }
+    public void StartLevelByInt(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex);
+    }
 
     public void Exit()
     {
