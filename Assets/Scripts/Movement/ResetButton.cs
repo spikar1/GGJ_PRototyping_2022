@@ -45,6 +45,7 @@ public class ResetButton : MonoBehaviour
         if (PlayModeSwitchTrigger.HasCheckpoint())
         {
             SoundManager.Instance.PlaySound(SoundManager.Sound.Reset);
+            PlayModeSwitchTrigger.ReloadLastCheckpoint();
             FindObjectOfType<PuzzleObjectInteraction>().LoadRotationsFromCheckpoint();
         }
             
