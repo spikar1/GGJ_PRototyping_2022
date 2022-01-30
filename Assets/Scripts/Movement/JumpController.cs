@@ -167,6 +167,8 @@ public class JumpController : MonoBehaviour
         //Set the initial jump velocity
         _rigid.SetVelocityY(jumpForce);
 
+        SoundManager.Instance.PlaySound(SoundManager.Sound.Jump);
+
         //As long as the player can still hold the button
         while (seconds < 0.15f)
         {
