@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6611354746011704075}
   - component: {fileID: 6611354746011704069}
   - component: {fileID: 6611354746011704070}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3026833692a9ba545a74d4ac3f24f01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpForce: 22
+  JumpForce: 15
   JumpReleaseForce: 16
   MaxFallSpeed: 20
   MercyFramesInSeconds: 0.25
