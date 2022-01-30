@@ -19,7 +19,7 @@ public class GoalPlatform : MonoBehaviour
     IEnumerator LoadLevel(string levelName)
     {
         yield return null; //todo: Insert fancy effect!
-        SceneManager.LoadScene(levelName);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
