@@ -51,6 +51,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
         private int width;
         private int height;
 
+
         public List<Vertices> DetectVertices(UnityEngine.Color[] colors, int width, int alphaTolerance)
         {
             this.width = width;
@@ -76,7 +77,7 @@ namespace DigitalRuby.AdvancedPolygonCollider
             var floatolors = 0;
             for (int i = 0; i< solids.Length; i++)
             {
-                if(coloredSolids[0] != 0) continue;
+                if(coloredSolids[i] != 0) continue;
                 if(solids[i] != 0) continue;
                 floatolors++;
                 
