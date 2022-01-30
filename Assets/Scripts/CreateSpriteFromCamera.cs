@@ -19,7 +19,6 @@ public class CreateSpriteFromCamera : MonoBehaviour
     [SerializeField]
     GameObject cheapQuad, expensiveSprite;
 
-    [SerializeField]
     bool allowFreeToggle;
 
     PlayModeManager.PlayMode? lastKnownMode = null;

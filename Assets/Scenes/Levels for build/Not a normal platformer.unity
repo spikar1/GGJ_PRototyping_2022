@@ -238,7 +238,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectsToTransform:
   - {fileID: 469710051}
-  rotationSpeed: 180
   useLocalAxis: 1
   availableAxes: 7
 --- !u!4 &185593788
@@ -1109,7 +1108,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 2119642783}
   cheapQuad: {fileID: 493381376}
   expensiveSprite: {fileID: 2119642779}
-  allowFreeToggle: 1
+  allowFreeToggle: 0
 --- !u!4 &1421278892
 Transform:
   m_ObjectHideFlags: 0

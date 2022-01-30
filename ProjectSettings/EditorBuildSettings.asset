@@ -15,6 +15,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Levels for build/Jumping Man.unity
     guid: 94cc16904f768a046bf9fe9eade7a5cb
   - enabled: 1
+    path: Assets/Scenes/Levels for build/Seesaw.unity
+    guid: 59d3485ee6531e7439fc4fd9cd04ffd0
+  - enabled: 1
+    path: Assets/Scenes/Levels for build/The reveal.unity
+    guid: c14345e4adcadd64b9b1469eb136cc53
+  - enabled: 1
     path: Assets/Scenes/Levels for build/Not a normal platformer.unity
     guid: 0832e8effb69ff847905e8a716dd3922
   - enabled: 1
@@ -29,6 +35,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels for build/Come to me.unity
     guid: 6c5970e116e3ade4ba3206139eb95520
+  - enabled: 1
+    path: Assets/Scenes/Levels for build/The Yin and the Yang.unity
+    guid: b1b8c45b2c9c24f41a739e37a4bf680e
   - enabled: 1
     path: Assets/Scenes/Levels for build/Three normal platforms.unity
     guid: 874bd413462c6d446a1367ebcf098d1f

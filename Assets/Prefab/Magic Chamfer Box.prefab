@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 19035f1f663a2f4459829d9c613980e4, type: 2}
+  - {fileID: 2100000, guid: dbef5400b75da32499ab58c964344799, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +98,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10.950587
+      value: 5.5847993
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_LocalScale.y
@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.04114
+      value: 1.9178
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -151,7 +151,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 19035f1f663a2f4459829d9c613980e4, type: 2}
+      objectReference: {fileID: 2100000, guid: dbef5400b75da32499ab58c964344799, type: 2}
     - target: {fileID: 919132149155446097, guid: dd0b27f1d8c97b34c91e9d905d65c67b, type: 3}
       propertyPath: m_Name
       value: ChamferBox_Tube
@@ -188,7 +188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2b57e3b03cf5dc44bfa483c1264dd6d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0809
+      value: 4.11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b2b57e3b03cf5dc44bfa483c1264dd6d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -229,7 +229,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: b2b57e3b03cf5dc44bfa483c1264dd6d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 19035f1f663a2f4459829d9c613980e4, type: 2}
+      objectReference: {fileID: 2100000, guid: dbef5400b75da32499ab58c964344799, type: 2}
     - target: {fileID: 919132149155446097, guid: b2b57e3b03cf5dc44bfa483c1264dd6d, type: 3}
       propertyPath: m_Name
       value: Chamfer Box (1)
