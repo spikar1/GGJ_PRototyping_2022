@@ -14,6 +14,7 @@ public class CharacterAnimationController : MonoBehaviour
     public SpriteAnimation Idle;
     public SpriteAnimation Walk;
     public SpriteAnimation Jump;
+    public SpriteAnimation InPuzzle;
 
     private Rigidbody2D _rigid;
     private SpriteAnimator _animator;
@@ -39,6 +40,12 @@ public class CharacterAnimationController : MonoBehaviour
 
         else if (_rigid.velocity.x < 0)
             _flippable.Direction = Direction1D.Left;
+
+        if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
+        {
+            _animator.Animation = InPuzzle;
+            return;
+        }
 
         if (!this.OnGround2D())
         {
