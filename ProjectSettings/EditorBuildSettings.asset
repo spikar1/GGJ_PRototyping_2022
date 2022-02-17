@@ -6,57 +6,57 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Game Start.unity
+    path: Assets/Scenes/Levels for build Prototype/Game Start.unity
     guid: 2b605c5fff9b36942a79f1517b51a726
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Running Man.unity
+    path: Assets/Scenes/Levels for build Prototype/Running Man.unity
     guid: 07ca23eb8cc26814fa5017fb4b748323
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Jumping Man.unity
+    path: Assets/Scenes/Levels for build Prototype/Jumping Man.unity
     guid: 94cc16904f768a046bf9fe9eade7a5cb
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Seesaw.unity
+    path: Assets/Scenes/Levels for build Prototype/Seesaw.unity
     guid: 59d3485ee6531e7439fc4fd9cd04ffd0
   - enabled: 1
-    path: Assets/Scenes/Levels for build/The reveal.unity
+    path: Assets/Scenes/Levels for build Prototype/The reveal.unity
     guid: c14345e4adcadd64b9b1469eb136cc53
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Not a normal platformer.unity
+    path: Assets/Scenes/Levels for build Prototype/Not a normal platformer.unity
     guid: 0832e8effb69ff847905e8a716dd3922
   - enabled: 1
-    path: Assets/Scenes/Levels for build/When in Depth.unity
+    path: Assets/Scenes/Levels for build Prototype/When in Depth.unity
     guid: d0810c375f4f5bd4c9ec4b109232d4a9
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Twice the pivots.unity
+    path: Assets/Scenes/Levels for build Prototype/Twice the pivots.unity
     guid: f8e98124b9ccf0f45a9e98b90dab2e36
   - enabled: 1
-    path: Assets/Scenes/Levels for build/The Ladder.unity
+    path: Assets/Scenes/Levels for build Prototype/The Ladder.unity
     guid: c90117aa0bc5cd846b71a5f5eeecf7cb
   - enabled: 1
-    path: Assets/Scenes/Levels for build/What is not apparent.unity
+    path: Assets/Scenes/Levels for build Prototype/What is not apparent.unity
     guid: 2c99ad54802ff304da837719806fa02b
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Come to me.unity
+    path: Assets/Scenes/Levels for build Prototype/Come to me.unity
     guid: 6c5970e116e3ade4ba3206139eb95520
   - enabled: 1
-    path: Assets/Scenes/Levels for build/The Yin and the Yang.unity
+    path: Assets/Scenes/Levels for build Prototype/The Yin and the Yang.unity
     guid: b1b8c45b2c9c24f41a739e37a4bf680e
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Three normal platforms.unity
+    path: Assets/Scenes/Levels for build Prototype/Three normal platforms.unity
     guid: 874bd413462c6d446a1367ebcf098d1f
   - enabled: 1
-    path: Assets/Scenes/Levels for build/In the cage.unity
+    path: Assets/Scenes/Levels for build Prototype/In the cage.unity
     guid: 22af5f96656b78c4c9b1e294f17e2b4d
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Spatial Recognition.unity
+    path: Assets/Scenes/Levels for build Prototype/Spatial Recognition.unity
     guid: 12e306de767fd4240ac89efe5a8539c6
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Rings of Dread.unity
+    path: Assets/Scenes/Levels for build Prototype/Rings of Dread.unity
     guid: b193101ddccb86445ab549b46e364887
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Hello!.unity
+    path: Assets/Scenes/Levels for build Prototype/Hello!.unity
     guid: b52c2dd51ffcf9544b27b70f77c08f3b
   - enabled: 1
-    path: Assets/Scenes/Levels for build/Game End.unity
+    path: Assets/Scenes/Levels for build Prototype/Game End.unity
     guid: 9786348e21104bc49b2611d48e64f21b
   m_configObjects: {}
