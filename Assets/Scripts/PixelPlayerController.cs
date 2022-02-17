@@ -31,7 +31,6 @@ public class PixelPlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         texture = new Texture2D(256, 256, TextureFormat.ARGB32, false);
 
-
         StartCoroutine(PlayerUpdate());
     }
 
@@ -62,13 +61,12 @@ public class PixelPlayerController : MonoBehaviour
 
         velocity += gravity;
 
-
-        if(Linecast(newPos + new Vector3(-.5f, -.5f),newPos + new Vector3(.5f, -.5f)))
+        DebugQuadDrawer.DrawLine(newPos + new Vector3(-.5f, -.5f), newPos + new Vector3(.5f, -.5f), Color.red, 0);
+        if(Raycast(newPos + new Vector3(-.5f, -.5f),newPos + new Vector3(.5f, -.5f), out float f))
         {
             velocity.y = 0;
             if (tryToJump)
                 velocity = new Vector3(velocity.x, .2f);
-
         }
 
         newPos += velocity;
@@ -81,19 +79,22 @@ public class PixelPlayerController : MonoBehaviour
         Vector2 pos = GetPixelPosition(transform.position);
         pX = (int)pos.x;
         pY = (int)pos.y;
-
-
     }
 
-    private Vector2 GetPixelPosition(Vector3 position)
+    private Vector2 GetPixelPosition(Vector2 position)
     {
-        return new Vector2(((position.x + 10)/ 20) * 320, (-position.y + 9) / 18 * 288);
+        var pixelPos = new Vector2(((position.x + 10) / 20) * 320, (-position.y + 9) / 18 * 288);
+        pixelPos.x = Mathf.Round(pixelPos.x);
+        pixelPos.y = Mathf.Round(pixelPos.y);
+        return pixelPos;
     }
 
-    private bool Linecast(Vector3 pos, Vector3 dest)
+    private bool Raycast(Vector3 pos, Vector3 dest, out float distance)
     {
         Vector2 pixelPositionStart = GetPixelPosition(pos);
         Vector2 pixelPositionEnd = GetPixelPosition(dest);
+
+        float maxDistance = Vector2.Distance(pos, dest);
 
         int width = (int)Mathf.Abs(pixelPositionStart.x - pixelPositionEnd.x);
         int height = (int)Mathf.Abs(pixelPositionStart.y - pixelPositionEnd.y);
@@ -114,16 +115,21 @@ public class PixelPlayerController : MonoBehaviour
 
         for (int i = 0; i < Mathf.Max(width, height); i++)
         {
-
-            var lerp = Vector2.Lerp(pixelPositionStart, pixelPositionEnd, (float)i / (float)Mathf.Max(width, height));
+            float delta = (float)i / (float)Mathf.Max(width, height);
+            var lerp = Vector2.Lerp(pixelPositionStart, pixelPositionEnd, delta);
             int x = (int)lerp.x;
             int y = (int)lerp.y;
             var col = texture.GetPixel(x,y);
 
-            if (col.a > .4f)
-                return true;
-        }
 
+            if (col.a > .4f)
+            {
+                distance = maxDistance * delta;
+
+                return true;
+            }
+        }
+        distance = float.MaxValue;
         return false;
     }
 
@@ -151,7 +157,7 @@ public class PixelPlayerController : MonoBehaviour
         return false;
     }
 
-    private bool OverlapPoint(Vector3 pos)
+    private bool OverlapPoint(Vector3 pos, out Color color)
     {
         Vector2 pixelPosition = GetPixelPosition(pos);
 
@@ -164,6 +170,8 @@ public class PixelPlayerController : MonoBehaviour
         texture.Apply();
 
         var col = texture.GetPixel(0, 0);
+
+        color = col;
 
         if (col.a > .4f)
             return true;
