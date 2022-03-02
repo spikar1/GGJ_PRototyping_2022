@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.AssetImporters;
 using UnityEngine;
 
 public class PixelPlayerController : MonoBehaviour
@@ -9,10 +10,6 @@ public class PixelPlayerController : MonoBehaviour
     RenderTexture renderTexture;
 
     public Texture2D texture;
-    [SerializeField]
-    int pX;
-    [SerializeField]
-    int pY;
     [SerializeField]
     int rad = 150;
 
@@ -25,19 +22,33 @@ public class PixelPlayerController : MonoBehaviour
     //player
     Vector3 velocity;
     private bool tryToJump;
+    private float inputX;
+    //Image stats
+    Vector2Int playerPixelPosition;
+    //World stats
+
+
+
+    PlayerBounds bounds;
+    Bounds colliderBounds => collider.bounds;
+    new Collider2D collider;
 
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         texture = new Texture2D(256, 256, TextureFormat.ARGB32, false);
 
+        collider= GetComponent<Collider2D>();
+
         StartCoroutine(PlayerUpdate());
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            tryToJump = true;
+        GetInput();
+
+
+        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private IEnumerator PlayerUpdate()
@@ -45,48 +56,104 @@ public class PixelPlayerController : MonoBehaviour
         while (true)
         {
             yield return new WaitForEndOfFrame();
+            UpdateBounds();
             UpdatePlayerPosition();
+
+            UpdateDebug();
+            //Debug.DrawLine(bounds.topLeft,      bounds.topRight,        Color.blue, 1);
+            //Debug.DrawLine(bounds.topRight,     bounds.bottomRight,     Color.blue, 1);
+            //Debug.DrawLine(bounds.bottomRight,  bounds.bottomLeft,      Color.blue, 1);
+            //Debug.DrawLine(bounds.bottomLeft,   bounds.topLeft,         Color.blue, 1);
+            
+            DebugQuadDrawer.DrawLine(bounds.topLeftPixel,      bounds.topRightPixel,        Color.blue * .5f, .01f);
+            DebugQuadDrawer.DrawLine(bounds.topRightPixel,     bounds.bottomRightPixel,     Color.blue * .5f, .01f);
+            DebugQuadDrawer.DrawLine(bounds.bottomRightPixel,  bounds.bottomLeftPixel,      Color.blue * .5f, .01f);
+            DebugQuadDrawer.DrawLine(bounds.bottomLeftPixel,   bounds.topLeftPixel,         Color.blue * .5f, .01f);
+
+            DebugQuadDrawer.DrawLine(bounds.topRightPixel, bounds.topRightPixel + new Vector2Int(8, -8), Color.white, .01f);
+            DebugQuadDrawer.DrawLine(bounds.bottomRightPixel, bounds.bottomRightPixel+ new Vector2Int(8, 8), Color.white, .01f);
+            DebugQuadDrawer.DrawLine(bounds.bottomLeftPixel, bounds.bottomLeftPixel+ new Vector2Int(-8, 8), Color.white, .01f);
+            DebugQuadDrawer.DrawLine(bounds.topLeftPixel, bounds.topLeftPixel + new Vector2Int(-8, -8), Color.white, .01f);
+
+            DebugQuadDrawer.DrawLine(GetPixelPosition(transform.position), GetPixelPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Color.black, .01f);
 
             yield return new WaitForSeconds(.01f);
         }
+    }
+
+    private void UpdateBounds()
+    {
+        bounds.topRight = colliderBounds.max;
+        bounds.bottomRight = colliderBounds.max + Vector3.down * colliderBounds.size.y;
+        bounds.bottomLeft = colliderBounds.min;
+        bounds.topLeft = colliderBounds.min + Vector3.up * colliderBounds.size.y;
+
+        bounds.topRightPixel = GetPixelPosition(bounds.topRight, new Vector2Int(-1,1));
+        bounds.bottomRightPixel = GetPixelPosition(bounds.bottomRight, new Vector2Int(-1, 0));
+        bounds.bottomLeftPixel = GetPixelPosition(bounds.bottomLeft);
+        bounds.topLeftPixel = GetPixelPosition(bounds.topLeft, new Vector2Int(0, 1));
+    }
+
+    private void UpdateDebug()
+    {
+
     }
 
     private void UpdatePlayerPosition()
     {
         Vector3 newPos = transform.position;
 
-        /*if (!OverlapArea(newPos + gravity, 16,16))
-        else
-            velocity = Vector3.zero;*/
-
         velocity += gravity;
 
-        DebugQuadDrawer.DrawLine(newPos + new Vector3(-.5f, -.5f), newPos + new Vector3(.5f, -.5f), Color.red, 0);
-        if(Raycast(newPos + new Vector3(-.5f, -.5f),newPos + new Vector3(.5f, -.5f), out float f))
-        {
-            velocity.y = 0;
-            if (tryToJump)
-                velocity = new Vector3(velocity.x, .2f);
-        }
+        CheckCollisionImage(velocity);
+        CheckCollisionWorld(velocity);
+
+        if (tryToJump)
+            TryJump();
 
         newPos += velocity;
-        transform.position = newPos;
+        //transform.position = newPos;
         tryToJump = false;
+    }
+
+    private void CheckCollisionImage(Vector3 velocity)
+    {
+
+    }
+
+    private void CheckCollisionWorld(Vector3 velocity)
+    {
+
+    }
+    private void TryJump()
+    {
+        throw new NotImplementedException();
+    }
+
+
+    private void GetInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            tryToJump = true;
+        inputX = Input.GetAxisRaw("Horizontal");
     }
 
     private void LateUpdate()
     {
         Vector2 pos = GetPixelPosition(transform.position);
-        pX = (int)pos.x;
-        pY = (int)pos.y;
+        playerPixelPosition.x = (int)pos.x;
+        playerPixelPosition.y = (int)pos.y;
+    }
+    private Vector2Int GetPixelPosition(Vector2 position)
+    {
+        return GetPixelPosition(position, Vector2Int.zero);
     }
 
-    private Vector2 GetPixelPosition(Vector2 position)
+    private Vector2Int GetPixelPosition(Vector2 position, Vector2Int pixelOffset)
     {
         var pixelPos = new Vector2(((position.x + 10) / 20) * 320, (-position.y + 9) / 18 * 288);
         pixelPos.x = Mathf.Round(pixelPos.x);
-        pixelPos.y = Mathf.Round(pixelPos.y);
-        return pixelPos;
+        return Vector2Int.RoundToInt(pixelPos) + pixelOffset;
     }
 
     private bool Raycast(Vector3 pos, Vector3 dest, out float distance)
@@ -113,7 +180,7 @@ public class PixelPlayerController : MonoBehaviour
         texture.Apply();
 
 
-        for (int i = 0; i < Mathf.Max(width, height); i++)
+        for (int i = 0; i < Mathf.Sqrt(Mathf.Pow(width,2) + Mathf.Pow(height, 2)) ; i++)
         {
             float delta = (float)i / (float)Mathf.Max(width, height);
             var lerp = Vector2.Lerp(pixelPositionStart, pixelPositionEnd, delta);
@@ -186,7 +253,7 @@ public class PixelPlayerController : MonoBehaviour
 
         RenderTexture.active = renderTexture;
 
-        Rect rectReadPicture = new Rect(pX, pY, 256, 256);
+        Rect rectReadPicture = new Rect(playerPixelPosition.x, playerPixelPosition.y, 256, 256);
         texture.ReadPixels(rectReadPicture, 0, 0);
         texture.Apply();
 
@@ -205,5 +272,12 @@ public class PixelPlayerController : MonoBehaviour
 
 
         RenderTexture.active = null;
+    }
+
+    struct PlayerBounds
+    {
+        public Vector2 topRight, bottomRight, bottomLeft, topLeft;
+        public Vector2Int topRightPixel, bottomRightPixel, bottomLeftPixel, topLeftPixel;
+
     }
 }

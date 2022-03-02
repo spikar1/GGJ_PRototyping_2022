@@ -7,8 +7,11 @@ using UnityEngine.UI;
 
 public class CreateSpriteFromCamera : MonoBehaviour
 {
-    int height = 1024;
-    int width = 1024;
+    [SerializeField]
+    bool disable = false;
+
+    int width = 320;
+    int height = 288;
     int depth = 1;
 
     Camera cam;
@@ -30,7 +33,9 @@ public class CreateSpriteFromCamera : MonoBehaviour
 
     private void Update()
     {
-        return;
+        if (disable)
+            return;
+
         if ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Return)))
         {
             if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle || allowFreeToggle)
@@ -49,7 +54,6 @@ public class CreateSpriteFromCamera : MonoBehaviour
             expensiveSprite.SetActive(true);
 
             UpdateSprite();
-            //UpdateCollider();
         }
         else if (PlayModeManager.Instance.CurrentMode == PlayModeManager.PlayMode.Puzzle)
         {
@@ -60,15 +64,6 @@ public class CreateSpriteFromCamera : MonoBehaviour
         lastKnownMode = PlayModeManager.Instance.CurrentMode;
     }
 
-    private void UpdateCollider()
-    {
-        //todo: Implement bloom to get better colliders at straight angles.
-        return;
-        if (pol)
-            Destroy(pol);
-
-        pol = spriteRenderer.gameObject.AddComponent<PolygonCollider2D>();
-    }
 
     void UpdateSprite()
     {
@@ -97,8 +92,7 @@ public class CreateSpriteFromCamera : MonoBehaviour
         RenderTexture.active = currentRenderTexture;
         Destroy(renderTexture);
 
-        Sprite sprite = Sprite.Create(texture, rect, Vector2.zero);
-        
+        Sprite sprite = Sprite.Create(texture, rect, Vector2.zero,16);
 
         return sprite;
     }
