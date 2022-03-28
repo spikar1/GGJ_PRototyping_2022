@@ -42,10 +42,10 @@ public class DebugQuadDrawer : MonoBehaviour
         return Vector2Int.RoundToInt(pixelPos) + pixelOffset;
     }
 
-    public static void DrawLine(Vector2Int start, Vector2Int end, Color color, float duration)
+    public static void DrawLine(Vector2Int start, Vector2Int end, Color color, float duration = .01f)
     {
-        end = end * new Vector2Int(1, -1);
-        start= start* new Vector2Int(1, -1);
+        end.y = -end.y -1;
+        start.y = -start.y -1;
 
         int width = (int)(end.x - start.x);
         int height = (int)(end.y - start.y);
@@ -61,9 +61,20 @@ public class DebugQuadDrawer : MonoBehaviour
             instance.tex.SetPixel(x, y, color);
             instance.StartCoroutine(ResetPixel(x, y, duration));
         }
+        instance.tex.SetPixel(end.x, end.y, color);
         instance.tex.SetPixel(start.x, start.y, Color.magenta);
+        instance.StartCoroutine(ResetPixel(end.x, end.y, duration));
         instance.tex.Apply();
 
+    }
+
+    public static void DrawPixel(Vector2Int position, Color color, float duration = .01f)
+    {
+        position.y = -position.y -1;
+
+        instance.tex.SetPixel(position.x, position.y, color);
+        instance.StartCoroutine(ResetPixel(position.x, position.y, duration));
+        instance.tex.Apply();
     }
 
     private static IEnumerator ResetPixel(int x, int y, float duration)

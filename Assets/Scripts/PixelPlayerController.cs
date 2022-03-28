@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.AssetImporters;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 
 public class PixelPlayerController : MonoBehaviour
 {
@@ -15,19 +16,21 @@ public class PixelPlayerController : MonoBehaviour
 
     SpriteRenderer sr;
 
-    Vector3 gravity = new Vector2(0, -.01f);
-
-    const float ratio = 10f / 9f;
+    Vector2Int gravity = new Vector2Int(0, 1);
 
     //player
-    Vector3 velocity;
+    [SerializeField]
+    private int jumpPower = 30;
+    [SerializeField]
+    private int walkSpeed = 10;
+    Vector2Int velocity;
     private bool tryToJump;
     private float inputX;
     //Image stats
     Vector2Int playerPixelPosition;
     //World stats
-
-
+    private int maxVelocityX = 30;
+    private int maxVelocityY = 30;
 
     PlayerBounds bounds;
     Bounds colliderBounds => collider.bounds;
@@ -40,6 +43,8 @@ public class PixelPlayerController : MonoBehaviour
 
         collider= GetComponent<Collider2D>();
 
+        playerPixelPosition = GetPixelPosition(transform.position);
+
         StartCoroutine(PlayerUpdate());
     }
 
@@ -47,8 +52,11 @@ public class PixelPlayerController : MonoBehaviour
     {
         GetInput();
 
-
         var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    }
+    private void LateUpdate()
+    {
+
     }
 
     private IEnumerator PlayerUpdate()
@@ -60,10 +68,6 @@ public class PixelPlayerController : MonoBehaviour
             UpdatePlayerPosition();
 
             UpdateDebug();
-            //Debug.DrawLine(bounds.topLeft,      bounds.topRight,        Color.blue, 1);
-            //Debug.DrawLine(bounds.topRight,     bounds.bottomRight,     Color.blue, 1);
-            //Debug.DrawLine(bounds.bottomRight,  bounds.bottomLeft,      Color.blue, 1);
-            //Debug.DrawLine(bounds.bottomLeft,   bounds.topLeft,         Color.blue, 1);
             
             DebugQuadDrawer.DrawLine(bounds.topLeftPixel,      bounds.topRightPixel,        Color.blue * .5f, .01f);
             DebugQuadDrawer.DrawLine(bounds.topRightPixel,     bounds.bottomRightPixel,     Color.blue * .5f, .01f);
@@ -77,6 +81,12 @@ public class PixelPlayerController : MonoBehaviour
 
             DebugQuadDrawer.DrawLine(GetPixelPosition(transform.position), GetPixelPosition(Camera.main.ScreenToWorldPoint(Input.mousePosition)), Color.black, .01f);
 
+            Debug.DrawRay(GetWorldPosition(playerPixelPosition), Vector3.up, Color.yellow, 0.01f);
+
+            DebugQuadDrawer.DrawPixel(bounds.bottomPixel, Color.yellow);
+            DebugQuadDrawer.DrawPixel(bounds.bottomRightPixel, Color.yellow);
+            DebugQuadDrawer.DrawLine(bounds.bottomPixel, bounds.bottomRightPixel, Color.green);
+
             yield return new WaitForSeconds(.01f);
         }
     }
@@ -88,10 +98,20 @@ public class PixelPlayerController : MonoBehaviour
         bounds.bottomLeft = colliderBounds.min;
         bounds.topLeft = colliderBounds.min + Vector3.up * colliderBounds.size.y;
 
+        bounds.top = colliderBounds.center + Vector3.up * colliderBounds.extents.y;
+        bounds.right = colliderBounds.center + Vector3.right * colliderBounds.extents.x;
+        bounds.bottom = colliderBounds.center + Vector3.down * colliderBounds.extents.y;
+        bounds.left = colliderBounds.center + Vector3.left * colliderBounds.extents.x;
+
         bounds.topRightPixel = GetPixelPosition(bounds.topRight, new Vector2Int(-1,1));
         bounds.bottomRightPixel = GetPixelPosition(bounds.bottomRight, new Vector2Int(-1, 0));
         bounds.bottomLeftPixel = GetPixelPosition(bounds.bottomLeft);
         bounds.topLeftPixel = GetPixelPosition(bounds.topLeft, new Vector2Int(0, 1));
+
+        bounds.topPixel = GetPixelPosition(bounds.top, new Vector2Int(0, 1));
+        bounds.rightPixel = GetPixelPosition(bounds.right, new Vector2Int(-1, 0));
+        bounds.bottomPixel = GetPixelPosition(bounds.bottom);
+        bounds.leftPixel = GetPixelPosition(bounds.left);
     }
 
     private void UpdateDebug()
@@ -101,33 +121,54 @@ public class PixelPlayerController : MonoBehaviour
 
     private void UpdatePlayerPosition()
     {
-        Vector3 newPos = transform.position;
-
         velocity += gravity;
-
-        CheckCollisionImage(velocity);
-        CheckCollisionWorld(velocity);
 
         if (tryToJump)
             TryJump();
-
-        newPos += velocity;
-        //transform.position = newPos;
         tryToJump = false;
+
+        velocity.x = (int)Input.GetAxisRaw("Horizontal") * walkSpeed;
+
+        CheckCollisionImage();
+        CheckCollisionWorld();
+
+
+        velocity.x = Mathf.Clamp(velocity.x, -maxVelocityX, maxVelocityX);
+        velocity.y = Mathf.Clamp(velocity.y, -maxVelocityY, maxVelocityY);
+
+        playerPixelPosition += velocity/10;
+
+        transform.position = GetWorldPosition(playerPixelPosition);
     }
 
-    private void CheckCollisionImage(Vector3 velocity)
+    private void CheckCollisionImage()
     {
+        int collisionMask = 0;
 
+        if (OverlapPointPixel(bounds.bottomPixel, out Color col))
+            collisionMask |= 1 << 3;
+
+        DebugQuadDrawer.DrawPixel(bounds.bottomPixel + new Vector2Int(0, 1), Color.red);
+        if(OverlapPointPixel(bounds.bottomPixel + new Vector2Int(0, 1), out Color c))
+        {
+            DebugQuadDrawer.DrawPixel(bounds.bottomPixel + new Vector2Int(0, 1), Color.green);
+            velocity.y = 0;
+            if (collisionMask == 1 << 3)
+            {
+                DebugQuadDrawer.DrawPixel(bounds.bottomPixel, Color.green);
+                playerPixelPosition.y -= 1;
+            }
+        }
     }
 
-    private void CheckCollisionWorld(Vector3 velocity)
+
+    private void CheckCollisionWorld()
     {
 
     }
     private void TryJump()
     {
-        throw new NotImplementedException();
+        velocity.y = -jumpPower;
     }
 
 
@@ -138,12 +179,12 @@ public class PixelPlayerController : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
     }
 
-    private void LateUpdate()
+    private Vector3 GetWorldPosition(Vector2Int playerPixelPosition)
     {
-        Vector2 pos = GetPixelPosition(transform.position);
-        playerPixelPosition.x = (int)pos.x;
-        playerPixelPosition.y = (int)pos.y;
+        var worldPosition = new Vector2((float)playerPixelPosition.x / 320 * 20 - 10,-((float)playerPixelPosition.y /288 * 18 - 9));
+        return worldPosition;
     }
+
     private Vector2Int GetPixelPosition(Vector2 position)
     {
         return GetPixelPosition(position, Vector2Int.zero);
@@ -153,9 +194,44 @@ public class PixelPlayerController : MonoBehaviour
     {
         var pixelPos = new Vector2(((position.x + 10) / 20) * 320, (-position.y + 9) / 18 * 288);
         pixelPos.x = Mathf.Round(pixelPos.x);
+        pixelPos.y -= 1; //Todo: This is weird... it makes pixelposition on debug and this script match
         return Vector2Int.RoundToInt(pixelPos) + pixelOffset;
     }
+    public bool RayCastPixel(Vector2Int start, Vector2Int end, out float distance)
+    {
+        int signedWidth = end.x - start.x;
+        int signedHeight = end.y - start.y;
 
+        int width = Mathf.Abs(signedWidth) + 1;
+        int height = Mathf.Abs(signedHeight) + 1 ;
+
+        int max = Mathf.Max(width, height);
+
+        texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
+
+        Rect rectReadPicture = new Rect(Mathf.Min(start.x, end.x), Mathf.Min(start.y, end.y), width, height);
+        RenderTexture.active = renderTexture;
+
+        texture.ReadPixels(rectReadPicture, 0, 0);
+        texture.Apply();
+
+        for (int i = 1; i < max; i++)
+        {
+            float delta = (float)i / max;
+            int x = Mathf.RoundToInt(signedWidth * delta) + start.x;
+            int y = Mathf.RoundToInt(signedHeight * delta) + start.y;
+
+            var pixel = texture.GetPixel(x, y);
+            if(pixel.a > .4f)
+            {
+                distance = Vector2Int.Distance(start, new Vector2Int(x, y));
+                return true;
+            }
+        }
+        distance = -1;
+        return false;
+
+    }
     private bool Raycast(Vector3 pos, Vector3 dest, out float distance)
     {
         Vector2 pixelPositionStart = GetPixelPosition(pos);
@@ -200,9 +276,8 @@ public class PixelPlayerController : MonoBehaviour
         return false;
     }
 
-    private bool OverlapArea(Vector3 pos, int width, int height)
+    private bool OverlapArea(Vector2Int pixelPosition, int width, int height)
     {
-        Vector2 pixelPosition = GetPixelPosition(pos);
         texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 
         Rect rectReadPicture = new Rect(pixelPosition.x - width/2, pixelPosition.y-width/2, width, height);
@@ -247,6 +322,26 @@ public class PixelPlayerController : MonoBehaviour
 
 
     }
+    private bool OverlapPointPixel(Vector2Int pixelPosition, out Color color)
+    {
+        texture = new Texture2D(3, 3, TextureFormat.ARGB32, false);
+        texture.filterMode = FilterMode.Point;
+
+        RenderTexture.active = renderTexture;
+        Rect rectReadPicture = new Rect(pixelPosition.x - 1, pixelPosition.y - 1, 3, 3);
+
+        texture.ReadPixels(rectReadPicture, 0, 0);
+        texture.Apply();
+
+        var col = texture.GetPixel(1, 1);
+
+        color = col;
+
+        if (col.a > .4f)
+            return true;
+        else
+            return false;
+    }
 
     private void TestRenderTextureToTextureFunction()
     {
@@ -277,6 +372,8 @@ public class PixelPlayerController : MonoBehaviour
     struct PlayerBounds
     {
         public Vector2 topRight, bottomRight, bottomLeft, topLeft;
+        public Vector2 top, right, bottom, left;
+        public Vector2Int topPixel, rightPixel, bottomPixel, leftPixel;
         public Vector2Int topRightPixel, bottomRightPixel, bottomLeftPixel, topLeftPixel;
 
     }

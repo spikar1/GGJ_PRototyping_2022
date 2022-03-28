@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Steffen_Surface
-  m_Shader: {fileID: 4800000, guid: 5ebb3694f4f027f4bbcd6ee863c39e6d, type: 3}
+  m_Shader: {fileID: 4800000, guid: 355a3f299f8ef9d44b7ff44dde84d864, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,6 +39,7 @@ Material:
     m_Floats:
     - _RimOffset: 0
     - _RimPower: 0
+    - _ShadowIntensity: 0.7
     - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
